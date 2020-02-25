@@ -9,6 +9,13 @@ MASK = "assets/masks/tw.png"
 FONT = "assets/fonts/font2.ttf"
 
 BG_COLOR = "white"
+NO_REPLIES = False
+###############3
+# to create cloud based on tweets
+# and not replies
+# set above boolean to True
+# use with cautopn
+####################3
 
 STOP_WRODS_LIST =[
     "assets/stop_words/stopwords_me.txt",
@@ -40,6 +47,7 @@ def extract_text(line):
 
     while words[0].startswith("@"): # mention ha ro hazf kon
         words = words[1:]
+        if NO_REPLIES : words = ["","","","","",""] # kolan bikhial in tweet besho
 
     if words[0] == "RT" : return "" # ignore retwetts
     words = words[:-3]
