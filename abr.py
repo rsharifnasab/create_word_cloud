@@ -3,9 +3,8 @@
 from wordcloud_fa import WordCloudFa
 import numpy as np
 from PIL import Image
+from clipboard import paste
 
-
-DEFAULT_FILE = "t.txt"
 MASK = "assets/masks/tw.png"
 FONT = "assets/fonts/font2.ttf"
 BG_COLOR = "white"
@@ -29,6 +28,9 @@ def clean_word(d):
     if "http" in d : return ""
     if "t.co" in d : return ""
     if len(d) <3: return ""
+    if " می" in d  or "شه" in d  : return ""
+    if "بیش" in d  : return ""
+
 
     return d
 
@@ -43,12 +45,14 @@ def extract_text(line):
     words_cleaned = [ clean_word(t) for t in words ]
     return " ".join(words_cleaned)
 
-
-
+raw_str = ""
 file_name = input("enter tweets filename: ")
-if file_name.strip() == "" : file_name = DEFAULT_FILE
+if file_name.strip() == "" :
+    print("using clipboard as source")
+    raw_str = paste()
+else:
+    raw_str = open(file_name, "r").read()
 
-raw_str = open(file_name, "r").read()
 raw_list = raw_str.split("\n")
 
 
