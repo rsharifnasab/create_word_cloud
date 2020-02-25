@@ -48,7 +48,8 @@ def extract_text(line):
 file_name = input("enter tweets filename: ")
 if file_name.strip() == "" : file_name = DEFAULT_FILE
 
-raw_list = open(file_name, "r").read().split("\n")
+raw_str = open(file_name, "r").read()
+raw_list = raw_str.split("\n")
 
 
 idish = raw_list[3].replace("@","")
@@ -81,4 +82,5 @@ word_cloud = wc.generate(text)
 
 image = word_cloud.to_image()
 image.save(f"out/{idish}.png")
+open(f"out/{idish}.txt","w").write(raw_str)
 image.show()
