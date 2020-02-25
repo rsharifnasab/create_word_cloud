@@ -30,6 +30,8 @@ def clean_word(d):
     if len(d) <3: return ""
     if " می" in d  or "شه" in d  : return ""
     if "بیش" in d  : return ""
+    if "می" in d : return ""
+    if d == "ست" : return ""
 
 
     return d
@@ -53,6 +55,7 @@ if file_name.strip() == "" :
 else:
     raw_str = open(file_name, "r").read()
 
+print()
 raw_list = raw_str.split("\n")
 
 
