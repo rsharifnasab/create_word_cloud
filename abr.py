@@ -7,7 +7,9 @@ from clipboard import paste
 
 MASK = "assets/masks/tw.png"
 FONT = "assets/fonts/font2.ttf"
+
 BG_COLOR = "white"
+
 STOP_WRODS_LIST =[
     "assets/stopwords_me.txt",
     "assets/origianl_stop_words.txt",
@@ -23,58 +25,56 @@ def load_stop_words():
 
 def clean_word(d):
     d.replace("\u200c","")
-    if "twitter" in d : return ""
-    if ".com" in d : return ""
-    if "http" in d : return ""
     if "t.co" in d : return ""
     if len(d) <3: return ""
+
     if " می" in d  or "شه" in d  : return ""
     if "بیش" in d  : return ""
     if "می" in d : return ""
     if d == "ست" : return ""
 
-
     return d
 
 def extract_text(line):
-    line = line.strip()
-    words = line.split(" ")
-    while words[0].startswith("@"):
+    words = line.strip().split(" ")
+
+    while words[0].startswith("@"): # mention ha ro hazf kon
         words = words[1:]
 
     if words[0] == "RT" : return "" # ignore retwetts
     words = words[:-3]
+
     words_cleaned = [ clean_word(t) for t in words ]
     return " ".join(words_cleaned)
 
-raw_str = ""
-file_name = input("enter tweets filename: ")
-if file_name.strip() == "" :
-    print("using clipboard as source")
-    raw_str = paste()
-else:
-    raw_str = open(file_name, "r").read()
 
-print()
+def get_raw_str():
+    file_name = input("enter tweets filename: ")
+    if file_name.strip() == "" :
+        print("using clipboard as source")
+        return paste()
+    else:
+        return open(file_name, "r").read()
+
+def print_stats(text):
+    print( f" len e kol : {len(text)}")
+    print (f"""spaces count : { len( text.split(" ") ) }""" )
+
+raw_str = get_raw_str()
 raw_list = raw_str.split("\n")
-
-
 idish = raw_list[3].replace("@","")
 print(f"working on @{idish}\n")
 
 
 raw_tweets_list = raw_list[10:-6] # start to end!
 texts = [ extract_text(t) for t in raw_tweets_list ]
-
 text = " ".join(texts)
 
-
-print( f" len e kol : {len(text)}")
-print (f"""spaces count : { len( text.split(" ") ) }""" )
+print_stats(text)
 
 mask_array = np.array( Image.open(MASK) )
-
-wc = WordCloudFa(
+#print(mask_array)
+wc_instance = WordCloudFa(
     width=900, height=900,
     background_color=BG_COLOR,
     font_path=FONT,
@@ -84,10 +84,9 @@ wc = WordCloudFa(
     stopwords=load_stop_words(),
 )
 
+word_cloud = wc_instance.generate(text)
 
-word_cloud = wc.generate(text)
-
-image = word_cloud.to_image()
-image.save(f"out/{idish}.png")
+result_image = word_cloud.to_image()
+result_image.save(f"out/{idish}.png")
 open(f"out/{idish}.txt","w").write(raw_str)
-image.show()
+result_image.show()
