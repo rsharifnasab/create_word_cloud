@@ -11,9 +11,9 @@ FONT = "assets/fonts/font2.ttf"
 BG_COLOR = "white"
 
 STOP_WRODS_LIST =[
-    "assets/stopwords_me.txt",
-    "assets/origianl_stop_words.txt",
-    "assets/addtional_stops.txt",
+    "assets/stop_words/stopwords_me.txt",
+    "assets/stop_words/origianl_stop_words.txt",
+    "assets/stop_words/addtional_stops.txt",
 ]
 
 def load_stop_words():
@@ -65,7 +65,6 @@ raw_list = raw_str.split("\n")
 idish = raw_list[3].replace("@","")
 print(f"working on @{idish}\n")
 
-
 raw_tweets_list = raw_list[10:-6] # start to end!
 texts = [ extract_text(t) for t in raw_tweets_list ]
 text = " ".join(texts)
@@ -73,7 +72,7 @@ text = " ".join(texts)
 print_stats(text)
 
 mask_array = np.array( Image.open(MASK) )
-#print(mask_array)
+
 wc_instance = WordCloudFa(
     width=900, height=900,
     background_color=BG_COLOR,
