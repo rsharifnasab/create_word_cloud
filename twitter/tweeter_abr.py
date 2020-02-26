@@ -9,6 +9,8 @@ from os import makedirs
 
 MASK = "../assets/masks/tw.png"
 FONT = "../assets/fonts/font2.ttf"
+FONT = "../assets/fonts/shabnam/Shabnam.ttf"
+
 OUT_FOLDER = "out/"
 
 BG_COLOR = "white"
@@ -42,6 +44,9 @@ def clean_word(d):
     if "بیش" in d  : return ""
     if "می" in d : return ""
     if d == "ست" : return ""
+    if "خیلی" in d : return ""
+    if "ولی" in d : return ""
+
 
     return d
 
@@ -81,7 +86,7 @@ def make_dir(dir):
 
 raw_str = get_raw_str()
 raw_list = raw_str.split("\n")
-idish = raw_list[3].replace("@","")
+idish = raw_list[3].replace("@","").strip()
 print(f"working on @{idish}\n")
 
 raw_tweets_list = raw_list[10:-6] # start to end!
