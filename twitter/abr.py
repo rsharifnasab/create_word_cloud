@@ -5,8 +5,8 @@ import numpy as np
 from PIL import Image
 from clipboard import paste
 
-MASK = "assets/masks/tw.png"
-FONT = "assets/fonts/font2.ttf"
+MASK = "../assets/masks/tw.png"
+FONT = "../assets/fonts/font2.ttf"
 
 BG_COLOR = "white"
 NO_REPLIES = False
@@ -18,9 +18,9 @@ NO_REPLIES = False
 ####################3
 
 STOP_WRODS_LIST =[
-    "assets/stop_words/stopwords_me.txt",
-    "assets/stop_words/origianl_stop_words.txt",
-    "assets/stop_words/addtional_stops.txt",
+    "../assets/stop_words/stopwords_me.txt",
+    "../assets/stop_words/origianl_stop_words.txt",
+    "../assets/stop_words/addtional_stops.txt",
 ]
 
 def load_stop_words():

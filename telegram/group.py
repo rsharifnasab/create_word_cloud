@@ -1,48 +1,93 @@
+#!/usr/bin/python3
 
-# This Python file uses the following encoding: utf-8
 from bs4 import BeautifulSoup
-import os
-import glob
-list_of_files = glob.glob('./*.html')
-all = ""
-for file_name in list_of_files:
-    print("read file:", file_name)
-    FI = open(file_name, 'r')
+from os import system as shell
+from glob import glob as glob_path
+from wordcloud_fa import WordCloudFa
+import numpy as np
+from PIL import Image
 
-    for line in FI:
-        all += line
+DEFAULT_PATH = './chat-datas/*/*.html'
+
+MASK = "../assets/masks/telegram.png"
+FONT = "../assets/fonts/font2.ttf"
+
+BG_COLOR = "white"
+
+STOP_WRODS_LIST =[
+    "../assets/stop_words/stopwords_me.txt",
+    "../assets/stop_words/origianl_stop_words.txt",
+    "../assets/stop_words/addtional_stops.txt",
+]
 
 
-db = []
-for i in range(24):
-    db.append(0)
-final = ""
-soup = BeautifulSoup(all, 'html.parser')
-metas = soup.find_all("div")
-sender = ""
-for meta in metas:
+def get_input_folder():
+    print("please enter path of exported folder")
+    print("(nothing for default)")
+    custom_path = input().strip()
+    final_path = custom_path if custom_path !="" else DEFAULT_PATH
+    return final_path
 
+
+def load_stop_words():
+    words = []
+    for file in STOP_WRODS_LIST:
+        new_words = open(file,"r").read().split()
+        words+= new_words
+    return set(words)
+
+def clean_word(d):
+    d.replace("\u200c","")
+    if len(d) <3: return ""
+
+    #if " می" in d  or "شه" in d  : return ""
+    #if "بیش" in d  : return ""
+    #if "می" in d : return ""
+    #if d == "ست" : return ""
+
+    return d
+
+
+def print_stats(text):
+    print( f" len e kol : {len(text)}")
+    print (f"""spaces count : { len( text.split(" ") ) }""" )
+
+
+list_of_files = glob_path( get_input_folder() )
+print("loading files")
+loaded_xml = "\n".join( [ open(add,"r").read() for add in list_of_files ] )
+
+print("parsing")
+soup = BeautifulSoup(loaded_xml, 'html.parser')
+meta_list = soup.find_all("div")
+
+text = ""
+for meta in meta_list:
     if "text" in meta.attrs['class']:
-        final += (meta.get_text())
-    if "from_name" in meta.attrs['class']:
-        sender = (meta.get_text())
-        final += sender
-    if "date" in meta.attrs['class']:
-        time = (meta.get_text())
-        final += time
-        # if "f_name" in sender.lower() and "l_name" in sender.lower() :
-        db[int(time[1:3])] += 1
+        text += meta.get_text() + " "
 
+print("cleaning")
+text = " ".join( [ clean_word(word) for word in text.split() ] )
 
-out = open("out.txt", "w")
-out.write(final)
-dbs = ""
-for i in range(24):
-    if i < 13:
-        hour = str(i) + " AM"
-    else:
-        hour = str(i-12) + " PM"
-    dbs = dbs + str(db[i])+" : " + hour + "\n"
-db_c = open("dbs.txt", "w")
-db_c.write(dbs)
-#os.system("sort -nr dbs.txt > sorted.txt")
+#################################
+
+print_stats(text)
+
+print("generating cloud")
+mask_array = np.array( Image.open(MASK) )
+
+wc_instance = WordCloudFa(
+    width=900, height=900,
+    background_color=BG_COLOR,
+    font_path=FONT,
+    mask = mask_array,
+    persian_normalize=True,
+    include_numbers=False,
+    stopwords=load_stop_words(),
+)
+
+word_cloud = wc_instance.generate(text)
+
+result_image = word_cloud.to_image()
+result_image.save(f"out/result.png")
+result_image.show()

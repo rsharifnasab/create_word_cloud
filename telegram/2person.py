@@ -1,8 +1,11 @@
 # This Python file uses the following encoding: utf-8
 from bs4 import BeautifulSoup
 import os
-import glob
-list_of_files = glob.glob('./*.html')
+from glob import glob as glob_path
+
+list_of_files = glob_path('./chat-datas/*/*.html')
+print(list_of_files)
+
 all = ""
 for file_name in list_of_files:
     print("read file:", file_name)
