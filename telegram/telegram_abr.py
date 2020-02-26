@@ -26,7 +26,7 @@ def get_input_folder():
     print("please enter path of exported folder")
     print("(nothing for default)")
     custom_path = input().strip()
-    final_path = custom_path if custom_path !="" else DEFAULT_INPUT_PATH
+    final_path = custom_path+"/*.html" if custom_path !="" else DEFAULT_INPUT_PATH
     return final_path
 
 
@@ -41,7 +41,6 @@ def clean_word(d):
     d.replace("\u200c","")
     if len(d) <3: return ""
 
-    #if " می" in d  or "شه" in d  : return ""
     #if "بیش" in d  : return ""
     #if "می" in d : return ""
     #if d == "ست" : return ""
