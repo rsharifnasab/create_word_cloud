@@ -2,11 +2,14 @@
 
 from wordcloud_fa import WordCloudFa
 from numpy import array as np_array
-from PIL import Image
+from PIL import Image as PIL_Image
 from clipboard import paste
+from os.path import exists as path_exists
+from os import makedirs
 
 MASK = "../assets/masks/tw.png"
 FONT = "../assets/fonts/font2.ttf"
+OUT_FOLDER = "out/"
 
 BG_COLOR = "white"
 NO_REPLIES = False
@@ -68,6 +71,14 @@ def print_stats(text):
     print( f" len e kol : {len(text)}")
     print (f"""spaces count : { len( text.split(" ") ) }""" )
 
+
+def make_dir(dir):
+    if not path_exists(dir):
+        makedirs(dir)
+        print(f"Created {dir} directory")
+
+
+
 raw_str = get_raw_str()
 raw_list = raw_str.split("\n")
 idish = raw_list[3].replace("@","")
@@ -79,7 +90,7 @@ text = " ".join(texts)
 
 print_stats(text)
 
-mask_array = np_array( Image.open(MASK) )
+mask_array = np_array( PIL_Image.open(MASK) )
 
 wc_instance = WordCloudFa(
     width=900, height=900,
@@ -94,6 +105,7 @@ wc_instance = WordCloudFa(
 word_cloud = wc_instance.generate(text)
 
 result_image = word_cloud.to_image()
+make_dir(OUT_FOLDER)
 result_image.save(f"out/{idish}.png")
 open(f"out/{idish}.txt","w").write(raw_str)
 result_image.show()

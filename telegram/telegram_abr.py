@@ -7,7 +7,8 @@ from wordcloud_fa import WordCloudFa
 from numpy import array as np_array
 from PIL import Image
 
-DEFAULT_PATH = './chat-datas/*/*.html'
+DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
+RESULT_PATH = "./result.png"
 
 MASK = "../assets/masks/telegram.png"
 FONT = "../assets/fonts/font2.ttf"
@@ -25,7 +26,7 @@ def get_input_folder():
     print("please enter path of exported folder")
     print("(nothing for default)")
     custom_path = input().strip()
-    final_path = custom_path if custom_path !="" else DEFAULT_PATH
+    final_path = custom_path if custom_path !="" else DEFAULT_INPUT_PATH
     return final_path
 
 
@@ -89,5 +90,5 @@ wc_instance = WordCloudFa(
 word_cloud = wc_instance.generate(text)
 
 result_image = word_cloud.to_image()
-result_image.save(f"out/result.png")
+result_image.save(RESULT_PATH)
 result_image.show()
