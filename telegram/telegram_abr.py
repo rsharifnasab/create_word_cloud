@@ -8,7 +8,7 @@ from numpy import array as np_array
 from PIL import Image
 
 DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
-RESULT_PATH = "./result.png"
+RESULT_FILE_ADD = "./result.png"
 
 MASK = "../assets/masks/telegram.png"
 FONT = "../assets/fonts/font2.ttf"
@@ -90,5 +90,5 @@ wc_instance = WordCloudFa(
 word_cloud = wc_instance.generate(text)
 
 result_image = word_cloud.to_image()
-result_image.save(RESULT_PATH)
+result_image.save(RESULT_FILE_ADD)
 result_image.show()
