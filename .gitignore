@@ -1,5 +1,3 @@
-
-out/
-old/
-verbs/
-t.txt
+twitter/out
+twitter/old
+twitter/t.txt
