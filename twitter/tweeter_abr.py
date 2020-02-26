@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from wordcloud_fa import WordCloudFa
-import numpy as np
+from numpy import array as np_array
 from PIL import Image
 from clipboard import paste
 
@@ -79,7 +79,7 @@ text = " ".join(texts)
 
 print_stats(text)
 
-mask_array = np.array( Image.open(MASK) )
+mask_array = np_array( Image.open(MASK) )
 
 wc_instance = WordCloudFa(
     width=900, height=900,

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from os import system as shell
 from glob import glob as glob_path
 from wordcloud_fa import WordCloudFa
-import numpy as np
+from numpy import array as np_array
 from PIL import Image
 
 DEFAULT_PATH = './chat-datas/*/*.html'
@@ -74,7 +74,7 @@ text = " ".join( [ clean_word(word) for word in text.split() ] )
 print_stats(text)
 
 print("generating cloud")
-mask_array = np.array( Image.open(MASK) )
+mask_array = np_array( Image.open(MASK) )
 
 wc_instance = WordCloudFa(
     width=900, height=900,
