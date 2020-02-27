@@ -55,7 +55,7 @@ def extract_text(line):
 
     while words[0].startswith("@"): # mention ha ro hazf kon
         words = words[1:]
-        if NO_REPLIES : words = ["","","","","",""] # kolan bikhial in tweet besho
+        if NO_REPLIES : return "" # kolan bikhial in tweet besho
 
     if words[0] == "RT" : return "" # ignore retwetts
     words = words[:-3]
