@@ -8,6 +8,7 @@ from os.path import exists as path_exists
 from os import makedirs
 
 MASK = "../assets/masks/tw.png"
+
 FONT = "../assets/fonts/font2.ttf"
 FONT = "../assets/fonts/shabnam/Shabnam.ttf"
 
