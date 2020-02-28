@@ -11,8 +11,6 @@ DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
 RESULT_FILE_ADD = "./result.png"
 
 MASK = "../assets/masks/telegram.png"
-MASK = "../assets/masks/telegram2.jpg"
-
 
 FONT = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
 
