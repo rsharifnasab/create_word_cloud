@@ -10,9 +10,9 @@ from PIL import Image
 DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
 RESULT_FILE_ADD = "./result.png"
 
-MASK = "../assets/masks/butterfly.jpg"
-FONT = "../assets/fonts/font2.ttf"
-Font = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
+MASK = "../assets/masks/telegram.png"
+
+FONT = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
 
 BG_COLOR = "white"
 
@@ -42,6 +42,7 @@ def clean_word(d):
     d.replace("\u200c","")
     if len(d) <3: return ""
     if "@" in d : return ""
+    if "joinchat" in d : return ""
     #if "بیش" in d  : return ""
     #if "می" in d : return ""
     #if d == "ست" : return ""
