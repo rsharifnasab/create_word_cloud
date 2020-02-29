@@ -77,6 +77,7 @@ def clean_word(d):
     d.replace("\u200c","")
     if "t.co" in d : return ""
     if len(d) <3: return ""
+    if "-" in d : return ""
 
     if " می" in d  or "شه" in d  : return ""
     if "بیش" in d  : return ""
