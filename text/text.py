@@ -16,7 +16,7 @@ from PIL import Image
 MASK = "../assets/masks/telegram.png"
 FONT = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
 
-DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
+DEFAULT_INPUT_PATH = './t.txt'
 RESULT_FILE_ADD = "./result.png"
 
 BG_COLOR = "white"
@@ -31,14 +31,14 @@ STOP_WRODS_LIST =[
 #########################################
 #              the CODE
 #########################################
-def get_input_folder():
+def get_input_file():
     """
     communicate with user and get address of srouce
     """
-    print("please enter path of exported folder")
+    print("please enter path of your text file")
     print(f"(nothing for default: {DEFAULT_INPUT_PATH})")
     custom_path = input().strip()
-    final_path = custom_path+"/*.html" if custom_path !="" else DEFAULT_INPUT_PATH
+    final_path = custom_path if custom_path !="" else DEFAULT_INPUT_PATH
     return final_path
 
 
@@ -77,31 +77,20 @@ def print_stats(text):
     print( f" len e kol : {len(text)}")
     print (f"""spaces count : { text.count(" ") }""" )
 
+file_add = get_input_file()
+with open(file_add,"r") as file:
+    raw_text = file.read()
 
-list_of_files = glob_path( get_input_folder() )
 
-print("loading files")
-xml_list = []
-for file_add in list_of_files:
-    with open(file_add,"r") as file:
-        xml_list.append(file.read())
-loaded_xml = "\n".join(xml_list)
-
-if loaded_xml.strip() == "":
+if raw_text.strip() == "":
     print("nothing loaded, exiting...")
     exit()
 
-print("parsing")
-soup = BeautifulSoup(loaded_xml, 'html.parser')
-meta_list = soup.find_all("div")
 
 text = ""
-for meta in meta_list:
-    if "text" in meta.attrs['class']:
-        text += meta.get_text() + " "
 
 print("cleaning")
-text = " ".join( [ clean_word(word) for word in text.split() ] )
+text = " ".join( [ clean_word(word) for word in raw_text.split() ] )
 
 #################################
 
