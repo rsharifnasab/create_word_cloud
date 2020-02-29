@@ -61,9 +61,10 @@ def load_stop_words():
     it load from 3 files that wrote in STOP_WORDS_LIST
     """
     words = []
-    for file in STOP_WRODS_LIST:
-        new_words = open(file,"r").read().split()
-        words+= new_words
+    for file_add in STOP_WRODS_LIST:
+        with open(file_add,"r") as file:
+            new_words = file.read().split()
+            words+= new_words
     return set(words)
 
 def clean_word(d):
@@ -118,7 +119,8 @@ def get_raw_str():
         print("using clipboard as source")
         return paste()
     else:
-        return open(file_name, "r").read()
+        with open(file_name, "r") as input_file:
+            return input_file.read()
 
 def print_stats(text):
     """
@@ -148,7 +150,7 @@ except IndexError:
 
 print(f"working on @{user_id}\n")
 
-raw_tweets_list = raw_list[10:-6] # remove up and down header
+raw_tweets_list = raw_list[10:-6] # remove up and down header footer
 text_list = [ extract_text(t) for t in raw_tweets_list ]
 text = " ".join(text_list)
 
@@ -171,5 +173,6 @@ word_cloud = wc_instance.generate(text)
 result_image = word_cloud.to_image()
 make_dir(OUT_FOLDER)
 result_image.save(f"{OUT_FOLDER}{user_id}.png")
-open(f"{OUT_FOLDER}{user_id}.txt","w").write(raw_str)
+with open(f"{OUT_FOLDER}{user_id}.txt","w") as result_file:
+    result_file.write(raw_str)
 result_image.show()
