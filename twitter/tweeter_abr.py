@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+##############################
+#          IMPORTS
+##############################
 from wordcloud_fa import WordCloudFa
 from numpy import array as np_array
 from PIL import Image as PIL_Image
@@ -7,6 +10,9 @@ from clipboard import paste
 from os.path import exists as path_exists
 from os import makedirs
 
+######################################
+#             CONFIGS
+######################################
 MASK = "../assets/masks/tw.png"
 
 FONT = "../assets/fonts/font2.ttf"
@@ -44,7 +50,16 @@ STOP_WRODS_LIST =[
     "../assets/stop_words/addtional_stops.txt",
 ]
 
+
+#########################################
+#              the CODE
+#########################################
+
 def load_stop_words():
+    """
+    load stop words and return them as a set
+    it load from 3 files that wrote in STOP_WORDS_LIST
+    """
     words = []
     for file in STOP_WRODS_LIST:
         new_words = open(file,"r").read().split()
@@ -52,6 +67,12 @@ def load_stop_words():
     return set(words)
 
 def clean_word(d):
+    """
+        remove some bad words from input
+        for example twitter links
+        or remove nim fasele
+        or ...
+    """
     d.replace("\u200c","")
     if "t.co" in d : return ""
     if len(d) <3: return ""
@@ -63,10 +84,14 @@ def clean_word(d):
     if "خیلی" in d : return ""
     if "ولی" in d : return ""
 
-
     return d
 
 def extract_text(line):
+    """
+        get a line of input
+        and remove junk file of it
+        and clean each word ant etc..
+    """
     words = line.strip().split(" ")
 
     if NO_LINK and "t.co" in line: return "" # linkdar ha ro hazf kon
@@ -84,6 +109,10 @@ def extract_text(line):
 
 
 def get_raw_str():
+    """
+        get input from input source
+        either clipboard or the input file
+    """
     file_name = input("enter tweets filename: ")
     if file_name.strip() == "" :
         print("using clipboard as source")
@@ -92,11 +121,18 @@ def get_raw_str():
         return open(file_name, "r").read()
 
 def print_stats(text):
+    """
+    show some statistics
+    to make sure that the program opened correct input file
+    """
     print( f" len e kol : {len(text)}")
     print (f"""spaces count : { text.count(" ") }""" )
 
 
 def make_dir(dir):
+    """
+    make the output directory if it isnt there!
+    """
     if not path_exists(dir):
         makedirs(dir)
         print(f"Created {dir} directory")
