@@ -1,7 +1,7 @@
-# tg_analyzer
-### this script will do some processes on your telegram chat history!
-
+# word cloud for telegram chat	
 first you should export a chat from telegram using telegram-desktop
-then, copy .py file near html files(it doesnt need other files)
+then, put your htmls in ./chat-datas/your-chat/*.html
 
-to run program you should install `beautifulsoup4` and `python3`
+or you can enter the folder  address wich contains html files later in progmram
+
+to run program you should install `beautifulsoup4` and `python3` and `wordcloud-fa`
