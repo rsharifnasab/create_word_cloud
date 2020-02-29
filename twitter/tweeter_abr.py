@@ -15,13 +15,28 @@ FONT = "../assets/fonts/shabnam/Shabnam.ttf"
 OUT_FOLDER = "out/"
 
 BG_COLOR = "white"
-NO_REPLIES = False
-###############3
+
+###############
+#if you have unfollow cheker
+# or some thing that post automatically tweet with link
+# turn on this option to remove all tweets with links (and links and quets)
+###########
+NO_LINK = False
+
+###############
 # to create cloud based on tweets
 # and not replies
 # set above boolean to True
 # use with cautopn
-####################3
+####################
+NO_REPLIES = False
+
+#############
+#this option is for ignoring retweets
+#because in default we want to create cloud only based on user tweets
+#not retweets
+##############
+NO_RETWEET = True
 
 STOP_WRODS_LIST =[
     "../assets/stop_words/stopwords_me.txt",
@@ -54,12 +69,15 @@ def clean_word(d):
 def extract_text(line):
     words = line.strip().split(" ")
 
-    while words[0].startswith("@"): # mention ha ro hazf kon
-        words = words[1:]
-        if NO_REPLIES : return "" # kolan bikhial in tweet besho
+    if NO_LINK and "t.co" in line: return "" # linkdar ha ro hazf kon
 
-    if words[0] == "RT" : return "" # ignore retwetts
-    words = words[:-3]
+    while words[0].startswith("@"): # mention ha ro hazf kon
+        if NO_REPLIES : return "" # kolan bikhial in tweet besho
+        words = words[1:]
+
+    if NO_RETWEET and words[0] == "RT" : return "" # retwetts ha ro hazf kon
+
+    words = words[:-3] # remove date and time
 
     words_cleaned = [ clean_word(t) for t in words ]
     return " ".join(words_cleaned)
@@ -75,7 +93,7 @@ def get_raw_str():
 
 def print_stats(text):
     print( f" len e kol : {len(text)}")
-    print (f"""spaces count : { len( text.split(" ") ) }""" )
+    print (f"""spaces count : { text.count(" ") }""" )
 
 
 def make_dir(dir):
@@ -84,15 +102,19 @@ def make_dir(dir):
         print(f"Created {dir} directory")
 
 
-
 raw_str = get_raw_str()
 raw_list = raw_str.split("\n")
-idish = raw_list[3].replace("@","").strip()
-print(f"working on @{idish}\n")
+try:
+    user_id = raw_list[3].replace("@","").strip()
+except IndexError:
+    print("bad input! please copy whole page")
+    exit()
 
-raw_tweets_list = raw_list[10:-6] # start to end!
-texts = [ extract_text(t) for t in raw_tweets_list ]
-text = " ".join(texts)
+print(f"working on @{user_id}\n")
+
+raw_tweets_list = raw_list[10:-6] # remove up and down header
+text_list = [ extract_text(t) for t in raw_tweets_list ]
+text = " ".join(text_list)
 
 print_stats(text)
 
@@ -112,6 +134,6 @@ word_cloud = wc_instance.generate(text)
 
 result_image = word_cloud.to_image()
 make_dir(OUT_FOLDER)
-result_image.save(f"out/{idish}.png")
-open(f"out/{idish}.txt","w").write(raw_str)
+result_image.save(f"{OUT_FOLDER}{user_id}.png")
+open(f"{OUT_FOLDER}{user_id}.txt","w").write(raw_str)
 result_image.show()
