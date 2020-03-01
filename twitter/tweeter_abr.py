@@ -176,4 +176,8 @@ make_dir(OUT_FOLDER)
 result_image.save(f"{OUT_FOLDER}{user_id}.png")
 with open(f"{OUT_FOLDER}{user_id}.txt","w") as result_file:
     result_file.write(raw_str)
+with open(f"{OUT_FOLDER}cleaned_{user_id}.txt","w") as cleaned_result_file:
+    cleaned_result_file.write(text)
+
+
 result_image.show()
