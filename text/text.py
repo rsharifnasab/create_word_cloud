@@ -13,8 +13,9 @@ from PIL import Image
 ######################################
 #             CONFIGS
 ######################################
-MASK = "../assets/masks/telegram.png"
+MASK = "../assets/masks/mohsen.jpg"
 FONT = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
+FONT = "../assets/fonts/IR/IRRoya_YasDL.com.ttf"
 
 DEFAULT_INPUT_PATH = './t.txt'
 RESULT_FILE_ADD = "./result.png"
