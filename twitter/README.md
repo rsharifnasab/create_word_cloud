@@ -1,29 +1,7 @@
 ﻿# create word cloud for a twitter account
-
-فارسی می‌نویسم چون برای کاربرای فارسی‌زبان ساختمش
-
-برای اینکه ابر کلمات بسازید اول باید ای‌‌دیتون رو توی این سایت وارد کنید
-
-https://www.allmytweets.net/
-
-بعدش قسمت توییت‌ها رو بزنید
-
-حالا یه صفحه میاره که نهایتا ۳۰۰۰ تا توییتر اخیرتون رو اورده
- 
-حالا 
-ctrl A 
-ctrl C 
-بعد توی یه فایل تکست 
-ctrl V
-
-حالا برنامه رو اینطوری باز کنید 
-`python3 abr.py`
-
-و آدرس فایلی که قسمت قبل سیو کردیم رو وارد کنید.
-
-یکم که منتظر بمونید ابر کلمات رو نشونتون میده 
-توی پوشه اوت هم سیو میکنه.
- 
+Extract your tweets using twit_get.py
+It doesn't look great but it works without using 3rd party websites
+But you need Twitter API key
 
 ## requierments:
 + get tweets from [this site](https://www.allmytweets.net/)
