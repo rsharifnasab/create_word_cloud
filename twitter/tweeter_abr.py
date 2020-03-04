@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+# coding=utf-8
 ##############################
 #          IMPORTS
 ##############################
@@ -9,11 +9,13 @@ from PIL import Image as PIL_Image
 from clipboard import paste
 from os.path import exists as path_exists
 from os import makedirs
+import matplotlib.pyplot as plt
+import re
 
 ######################################
 #             CONFIGS
 ######################################
-MASK = "../assets/masks/tw.png"
+MASK = "../assets/masks/twitter.png"
 
 FONT = "../assets/fonts/font2.ttf"
 FONT = "../assets/fonts/shabnam/Shabnam.ttf"
@@ -45,8 +47,8 @@ NO_REPLIES = False
 NO_RETWEET = True
 
 STOP_WRODS_LIST =[
-    "../assets/stop_words/stopwords_me.txt",
-    "../assets/stop_words/origianl_stop_words.txt",
+    #"../assets/stop_words/stopwords_me.txt",
+    #"../assets/stop_words/origianl_stop_words.txt",
     "../assets/stop_words/addtional_stops.txt",
 ]
 
@@ -78,15 +80,19 @@ def clean_word(d):
     if "t.co" in d : return ""
     if len(d) <3: return ""
     if "-" in d : return ""
-
+    
     if " می" in d  or "شه" in d  : return ""
     if "بیش" in d  : return ""
     if "می" in d : return ""
     if d == "ست" : return ""
     if "خیلی" in d : return ""
     if "ولی" in d : return ""
-
+    
+    stp_words = load_stop_words()
+    for stp in stp_words:
+        if stp in d : return "" 
     return d
+    
 
 def extract_text(line):
     """
@@ -97,7 +103,7 @@ def extract_text(line):
     words = line.strip().split(" ")
 
     if NO_LINK and "t.co" in line: return "" # linkdar ha ro hazf kon
-
+    words.append("")
     while words[0].startswith("@"): # mention ha ro hazf kon
         if NO_REPLIES : return "" # kolan bikhial in tweet besho
         words = words[1:]
@@ -116,6 +122,7 @@ def get_raw_str():
         either clipboard or the input file
     """
     file_name = input("enter tweets filename: ")
+    print(f"working on @" + file_name, "\n")
     if file_name.strip() == "" :
         print("using clipboard as source")
         return paste()
@@ -140,6 +147,33 @@ def make_dir(dir):
         makedirs(dir)
         print(f"Created {dir} directory")
 
+###########################################
+def rm_unwanted(text):
+    unwanted = re.compile("["
+                               u"\U0001F600-\U0001F64F"  # emoticons
+                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               u"\U00002702-\U000027B0"
+                               u"\U000024C2-\U0001F251"
+                               u"\U0001f926-\U0001f937"
+                               u'\U00010000-\U0010ffff'
+                               u"\u200d"
+                               u"\u2640-\u2642"
+                               u"\u2600-\u2B55"
+                               u"\u23cf"
+                               u"\u23e9"
+                               u"\u231a"
+                               u"\u3030"
+                               u"\ufe0f"
+                               u"\u2069"
+                               u"\u2066"
+                               u"\u200c"
+                               u"\u2068"
+                               u"\u2067"
+                               "]+", flags=re.UNICODE)
+    return unwanted.sub(r'', text)
+###########################################
 
 raw_str = get_raw_str()
 raw_list = raw_str.split("\n")
@@ -149,11 +183,16 @@ except IndexError:
     print("bad input! please copy whole page")
     exit()
 
-print(f"working on @{user_id}\n")
+
 
 raw_tweets_list = raw_list[10:-6] # remove up and down header footer
 text_list = [ extract_text(t) for t in raw_tweets_list ]
 text = " ".join(text_list)
+
+from arabic_reshaper import arabic_reshaper
+from bidi.algorithm import get_display
+text = rm_unwanted(text)
+text = get_display(arabic_reshaper.reshape(text))
 
 print_stats(text)
 
@@ -173,11 +212,15 @@ word_cloud = wc_instance.generate(text)
 
 result_image = word_cloud.to_image()
 make_dir(OUT_FOLDER)
-result_image.save(f"{OUT_FOLDER}{user_id}.png")
 with open(f"{OUT_FOLDER}{user_id}.txt","w") as result_file:
     result_file.write(raw_str)
 with open(f"{OUT_FOLDER}cleaned_{user_id}.txt","w") as cleaned_result_file:
     cleaned_result_file.write(text)
 
-
 result_image.show()
+
+plt.imshow(word_cloud)
+plt.axis('off') 
+plt.savefig('out/wc.png', dpi=1800)  #instead of result_image.save()
+plt.close()
+plt.show()
