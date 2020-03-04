@@ -14,6 +14,7 @@ from PIL import Image
 #             CONFIGS
 ######################################
 MASK = "../assets/masks/telegram.png"
+MASK = "../assets/masks/half-person.jpg"
 FONT = "../assets/fonts/IR/IRNazanin_YasDL.com.ttf"
 
 DEFAULT_INPUT_PATH = './chat-datas/*/*.html'
