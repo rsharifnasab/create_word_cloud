@@ -1,0 +1,173 @@
+#!/usr/bin/python3
+
+from os import makedirs
+from PIL import Image as PIL_Image
+from numpy import array as np_array
+from os.path import exists
+from bs4 import BeautifulSoup
+from allmytweets import get_text as load_twitter_text
+
+from config import *
+
+
+
+def determine_context() -> str:
+    print("which word cloud you want to create?")
+    print("1)twitter  2)telegram 3)normal_text")
+    context = input().strip()
+    if context in ["", "1", "tw", "twitter"]: return "twitter"
+    elif context in ["2", "tg", "telegram"]: return "telegram"
+    elif context in ["3", "text", "normal"]: return "text"
+    else:
+        print("invalid input, exiting..")
+        exit()
+
+def get_text(context : str) -> str:
+    if context == "twitter":
+        return load_twitter_text(twitter_config['SOURCE'])
+    elif context == "telegram":
+        return load_telegram_text(telegram_config['SOURCE'])
+    elif context == "text":
+        return load_normal_text(text_config['SOURCE'])
+
+    raise ValueError("shoudnt reach here!")
+
+#def save_image(PIL_Image,)
+
+def load_mask() -> np_array:
+    print("loading mask")
+
+    mask_add = general_config["MASK"]
+    mask_add = mask_add.replace(".jpg","").replace(".png","")
+
+    jpg_add = mask_add + ".jpg"
+    png_add = mask_add + ".png"
+
+    jpg_image = None
+
+    if exists(jpg_add):
+        jpg_image = PIL_Image.open(jpg_add)
+    elif exists(png_add):
+        png_image = PIL_Image.open(png_add)
+        jpg_image = png_image.convert('RGB')
+    else:
+        print("mask not found")
+        exit()
+
+    mask_array = np_array(jpg_image)
+
+    if general_config["NORMALIZE_MASK"]:
+        for i in range(len(mask_array)):
+            for j in range(len(mask_array[i])):
+                old_arr = mask_array[i][j]
+
+                if sum(old_arr)>100:
+                    new_arr = [255,255,255]
+                else:
+                    new_arr = [0,0,0]
+
+                mask_array[i][j] = new_arr
+
+    return mask_array
+
+
+def print_stats(text : str):
+    """
+    show some statistics
+    to make sure that the program opened correct input file
+    """
+    print( f" len e kol : {len(text)}")
+    print (f"""spaces count : { text.count(" ") }""" )
+
+
+def load_stop_words() -> set:
+    """
+    load stop words and return them as a set
+    it load from 3 files that wrote in STOP_WORDS_LIST
+    """
+    print("loading stop words")
+
+    words = set([])
+    for file_add in general_config["STOP_WORDS_LIST"]:
+        with open(file_add,"r") as file:
+            new_words = file.read().split()
+            words.update(new_words)
+    return words
+
+
+def clean_text(text:str,context:str) -> str:
+    print("cleaning text")
+    word_list = text.split(" ")
+    general_cleaned = [clean_word(word) for word in word_list]
+
+    custom_clean = general_cleaned
+
+    if context == "twitter":
+        custom_cleaned = [clean_twitter_word(word) for word in general_cleaned]
+
+    elif context == "telegram":
+        custom_cleaned = [clean_telegram_word(word) for word in general_cleaned]
+
+    return " ".join(custom_cleaned)
+
+def clean_word(word: str) -> str:
+    """
+        remove some bad words from input
+        remove nim fasele
+        and small words
+        or ...
+    """
+
+    word.replace("\u200c","")
+    if len(word) <3: return ""
+    if "-" in word : return ""
+
+    return word
+
+
+def clean_twitter_word(word : str) -> str:
+    if "t.co" in word : return ""
+
+    return word
+
+def clean_telegram_word(word : str) -> str:
+    if "@" in word : return ""
+    if "joinchat" in word : return ""
+
+    return word
+
+
+def load_telegram_text(source_dir : str) -> str:
+    print("loading telegram files")
+
+    list_of_files = glob_path( source_dir )
+
+    xml_list = []
+    for file_add in list_of_files:
+        with open(file_add,"r") as file:
+            xml_list.append(file.read())
+    loaded_xml = "\n".join(xml_list)
+
+    if loaded_xml.strip() == "":
+        print("nothing loaded, exiting...")
+        exit()
+
+    print("parsing")
+    soup = BeautifulSoup(loaded_xml, 'html.parser')
+    meta_list = soup.find_all("div")
+
+    text = []
+    for meta in meta_list:
+        if "text" in meta.attrs['class']:
+            text.add(meta.get_text() + " ")
+
+    return " ".join(text)
+
+
+def make_dir(dir : str):
+    """
+    make the output directory if it isnt there!
+    """
+    if not exists(dir):
+        makedirs(dir)
+        print(f"Created {dir} directory")

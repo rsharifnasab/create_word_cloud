@@ -1,3 +1,7 @@
+out/
+__pycache__/
+input.txt
+input/
 devel/
 telegram/chat-datas/
 telegram/out/
