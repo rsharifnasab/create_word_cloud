@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 general_config = {
-    "MASK" : "./assets/masks/tw.png",
+    "MASK" : "./assets/masks/tw",
 
     "FONT" : "./assets/fonts/shabnam/Shabnam.ttf",
 

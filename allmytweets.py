@@ -5,7 +5,7 @@ from clipboard import paste
 from config import twitter_config
 
 
-def get_text(source : str) -> set:
+def get_text(source : str) -> (str,str):
     raw_str = None
 
     if source == "clipboard":
@@ -28,7 +28,7 @@ def get_text(source : str) -> set:
     raw_tweet_list = raw_list[10:-6] # remove up and down header footer
     text = [ clean_line(line) for line in raw_tweet_list ]
 
-    return "\n".join(text)
+    return "\n".join(text), user_id
 
 
 

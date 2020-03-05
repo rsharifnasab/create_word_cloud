@@ -16,7 +16,7 @@ def main():
     context = determine_context()
     mask = load_mask()
     stop_words = load_stop_words()
-    text = get_text(context)
+    text, user_id = get_text(context)
     text = clean_text(text = text , context = context)
     print_stats(text)
 
@@ -37,7 +37,7 @@ def main():
     OUT_FOLDER = general_config['OUT_FOLDER']
 
     make_dir(OUT_FOLDER)
-    user_id  = "2"
+
     result_image.save(f"{OUT_FOLDER}{user_id}.png")
     #with open(f"{OUT_FOLDER}{user_id}.txt","w") as result_file:
     #    result_file.write(raw_str)
