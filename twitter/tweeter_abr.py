@@ -13,7 +13,7 @@ from os import makedirs
 ######################################
 #             CONFIGS
 ######################################
-MASK = "../assets/masks/tw.png"
+MASK = "../assets/masks/luky.jpg"
 
 FONT = "../assets/fonts/font2.ttf"
 FONT = "../assets/fonts/shabnam/Shabnam.ttf"
@@ -158,6 +158,13 @@ text = " ".join(text_list)
 print_stats(text)
 
 mask_array = np_array( PIL_Image.open(MASK) )
+
+for i in range(len(mask_array)):
+    for j in range(len(mask_array[i])):
+        if sum(mask_array[i][j])> 100:
+            mask_array[i][j] = [255,255,255]
+        else:
+            mask_array[i][j] = [0,0,0]
 
 wc_instance = WordCloudFa(
     width=900, height=900,
