@@ -13,7 +13,7 @@ from os import makedirs
 ######################################
 #             CONFIGS
 ######################################
-MASK = "../assets/masks/iran.png"
+MASK = "../assets/masks/tw.png"
 
 FONT = "../assets/fonts/font2.ttf"
 FONT = "../assets/fonts/shabnam/Shabnam.ttf"
