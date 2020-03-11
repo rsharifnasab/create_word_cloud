@@ -16,19 +16,18 @@ general_config = {
         "./assets/stop_words/origianl_stop_words.txt",
         "./assets/stop_words/addtional_stops.txt",
         ],
+    "STOP_WORD_CLEAN" : "not manual",
+
+    "ARABIC_RESHAPER" : False,
 }
 
 telegram_config = {
-
     "SOURCE" : './input/*.html',
 }
 
 text_config = {
-
     "SOURCE" : './input.txt',
 }
-
-
 
 twitter_config = {
     ###############
@@ -59,6 +58,6 @@ twitter_config = {
     # it can be clipboard
     # or a file path
     #############
-    "SOURCE" : "clipboard" # "./input.txt",
+    "SOURCE" :  "./input.txt", #"clipboard"
 
 }
