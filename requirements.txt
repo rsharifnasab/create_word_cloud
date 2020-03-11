@@ -1,7 +1,7 @@
-Pillow == 6.2.0
-arabic_reshaper == 2.0.15
+Pillow == 7.0.0
+arabic-reshaper == 2.0.15
 beautifulsoup4 == 4.8.2
 clipboard == 0.0.4
 numpy == 1.18.1
-python_bidi == 0.4.2
-wordcloud_fa == 0.1.6
+python-bidi == 0.4.2
+wordcloud-fa == 0.1.5

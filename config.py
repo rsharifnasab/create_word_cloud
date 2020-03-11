@@ -9,7 +9,7 @@ general_config = {
 
     "BG_COLOR" : "white",
 
-    "NORMALIZE_MASK" : True,
+    "NORMALIZE_MASK" : False,
 
     "STOP_WORDS_LIST" : [
         "./assets/stop_words/stopwords_me.txt",
