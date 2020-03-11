@@ -43,6 +43,7 @@
 + beautifulsoup4 (for parse telegram htmls)
 + arabic reshaper
 + bidi
++ clipboard
 
 You can also install requirements using `requirements.txt` and `pip`:
 
