@@ -27,6 +27,12 @@ general_config = {
 	"MIN_FONT" : 5,
 	"MAX_FONT" : 1000,
 
+	###################
+	# total number of words in shape
+	##################
+	"MAX_WORDS" : 1000,
+
+
 	#################
     #settingfor splitter line
     #the line between texts and white space
@@ -34,12 +40,6 @@ general_config = {
     ##################
     "LINE_COLOR" : "steelblue",
     "LINE_WIDTH" : 0,
-
-
-	###################
-	# total number of words in shape
-	##################
-	"MAX_WORDS" : 1000,
 
 
     #################

@@ -27,19 +27,41 @@
 ### notes
 + you can set font and mask in general_config file
   + ener a ttf font
+  
   + mask image should be png or jpg
+
   + you dont need to specify file format! program will guess it
-
+  
+    
+  
 + if you use third party mask and its not black and white (greyscale for example) you can set NORMALIZE_MASK to True
-  + normalize mask is slow operation, it handles greyscale masks, if you use built-in masks you dont need it
-
+  
++ normalize mask is slow operation, it handles greyscale masks, if you use built-in masks you dont need it
+  
+    
+  
 + if stop words didnt removed automatically, set STOP_WORD_CLEAN to "manual" in config.py
+
+  
+
 + only if persian words are reversed, make ARABIC_RESHAPER to True
+
+  
+
++ line color and line width are for s aplitter line between text and whitespace, it maybe good for some cases
+
+  
+
++ max words and min font and max font are 3 numbers, change them with caution, if the min font is too low or max words is high, whole operation will take much time, if the max font is not so big, cloud is ugly
+
+
+
+
 
 
 ## Requirements
-+ wordcloud-fa
-+ numpy and PIL (installed by wordcloud-fa)
++ wordcloud
++ numpy and PIL 
 + beautifulsoup4 (for parse telegram htmls)
 + arabic reshaper
 + bidi
@@ -50,9 +72,9 @@ You can also install requirements using `requirements.txt` and `pip`:
     pip3 install -r requirements.txt
 
 ## todo
-+ write documentation
++ write better documentation
 + add commandline argument parse
-+ add twint support in abr.py
++ add well twint support for getting tweets
 
 ## special thank from:
 
