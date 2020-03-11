@@ -7,7 +7,18 @@
 3. select your context (twitter or telegram or normal text)
 4. wait until program finishes
 
-### note: normalalize mask is slow operation, it handles greyscale masks, if you use built-in masks you dont need it 
+### notes
++ you can set font and mask in general_config file
+  + ener a ttf font
+  + mask image should be png or jpg
+  + you dont need to specify file format! program will guess it
+
++ if you use third party mask and its not black and white (greyscale for example) you can set NORMALIZE_MASK to True
+  + normalize mask is slow operation, it handles greyscale masks, if you use built-in masks you dont need it
+
++ if stop words didnt removed automatically, set STOP_WORD_CLEAN to "manual" in config.py
++ only if persian words are reversed, make ARABIC_RESHAPER to True
+
 
 ## requirement
 + wordcloud-fa
@@ -26,6 +37,8 @@
 2. enter file address to config.py, twitter_config dictionary
 3. if you set 'SOURCE' : "clipboard" program will use system clipboard instead of input file
 4. you can set other options in that config
+ + no_retweet and no_replis are work as they expected so
+ + no link will remove all tweets contains link for example quotes, images and unfollow checker auto tweets
 
 
 ## telegram

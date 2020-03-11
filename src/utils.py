@@ -103,6 +103,11 @@ def load_stop_words() -> set:
             words.update(new_words)
     return words
 
+def is_stop_word(word,stop_words):
+    for stop_word in stop_words:
+        if stop_word in word : return True
+    return False
+
 def remove_unwanted_chars(text):
     unwanted = regex_compile("["
                                u"\U0001F600-\U0001F64F"  # emoticons
@@ -130,11 +135,12 @@ def remove_unwanted_chars(text):
     return unwanted.sub(r'', text)
 
 
-def clean_text(text:str,context:str) -> str:
+def clean_text(text:str,context:str, stop_words) -> str:
     print("cleaning text")
 
     text = remove_unwanted_chars(text)
-    #text = get_display(arabic_reshaper.reshape(text))
+    if general_config["ARABIC_RESHAPER"]:
+        text = get_display(arabic_reshaper.reshape(text))
 
     word_list = text.split(" ")
     general_cleaned = [clean_word(word) for word in word_list]
@@ -146,6 +152,9 @@ def clean_text(text:str,context:str) -> str:
 
     elif context == "telegram":
         custom_cleaned = [clean_telegram_word(word) for word in general_cleaned]
+
+    if general_config["STOP_WORD_CLEAN"] == "manual":
+        custom_cleaned = [word for word in custom_cleaned if not is_stop_word(word,stop_words)]
 
     return " ".join(custom_cleaned)
 

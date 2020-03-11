@@ -15,7 +15,7 @@ def main():
     mask = load_mask()
     stop_words = load_stop_words()
     text, user_id = get_text(context)
-    text = clean_text(text = text , context = context)
+    text = clean_text(text = text , context = context, stop_words = stop_words)
     print_stats(text)
 
 
