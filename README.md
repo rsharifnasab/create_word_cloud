@@ -37,13 +37,16 @@
 + only if persian words are reversed, make ARABIC_RESHAPER to True
 
 
-## requirement
+## Requirements
 + wordcloud-fa
 + numpy and PIL (installed by wordcloud-fa)
 + beautifulsoup4 (for parse telegram htmls)
-
 + arabic reshaper
 + bidi
+
+You can also  install requirements using `requirements.txt` and `pip`:
+
+    pip3 install -r requirements.txt
 
 ## todo
 + write documentation
