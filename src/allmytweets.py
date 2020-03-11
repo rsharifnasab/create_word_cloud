@@ -12,6 +12,7 @@ def get_text(source : str) -> (str,str):
         print("using clipboard as source")
         raw_str = paste()
     else:
+        print(f"loading allmytweets file from {source}")
         with open(source, "r") as input_file:
             raw_str = input_file.read()
 

@@ -5,9 +5,14 @@ from PIL import Image as PIL_Image
 from numpy import array as np_array
 from os.path import exists
 from bs4 import BeautifulSoup
-from allmytweets import get_text as load_twitter_text
 from glob import glob as glob_path
+from re import compile as regex_compile
+from re import UNICODE as regex_UNICODE
 
+from arabic_reshaper import arabic_reshaper
+from bidi.algorithm import get_display
+
+from src.allmytweets import get_text as load_twitter_text
 from config import *
 
 
@@ -23,7 +28,7 @@ def determine_context() -> str:
         print("invalid input, exiting..")
         exit()
 
-def get_text(context : str) -> str:
+def get_text(context : str):
     if context == "twitter":
         return load_twitter_text(twitter_config['SOURCE'])
     elif context == "telegram":
@@ -33,7 +38,7 @@ def get_text(context : str) -> str:
 
     raise ValueError("shoudnt reach here!")
 
-#def save_image(PIL_Image,)
+
 
 def load_mask() -> np_array:
     print("loading mask")
@@ -48,8 +53,10 @@ def load_mask() -> np_array:
 
     if exists(jpg_add):
         jpg_image = PIL_Image.open(jpg_add)
+        print(f"loaded mask {jpg_add}")
     elif exists(png_add):
         png_image = PIL_Image.open(png_add)
+        print(f"loaded mask {png_add}")
         jpg_image = png_image.convert('RGB')
     else:
         print("mask not found")
@@ -58,6 +65,7 @@ def load_mask() -> np_array:
     mask_array = np_array(jpg_image)
 
     if general_config["NORMALIZE_MASK"]:
+        print("normalizing mask")
         for i in range(len(mask_array)):
             for j in range(len(mask_array[i])):
                 old_arr = mask_array[i][j]
@@ -95,13 +103,43 @@ def load_stop_words() -> set:
             words.update(new_words)
     return words
 
+def remove_unwanted_chars(text):
+    unwanted = regex_compile("["
+                               u"\U0001F600-\U0001F64F"  # emoticons
+                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
+                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                               u"\U00002702-\U000027B0"
+                               u"\U000024C2-\U0001F251"
+                               u"\U0001f926-\U0001f937"
+                               u'\U00010000-\U0010ffff'
+                               u"\u200d"
+                               u"\u2640-\u2642"
+                               u"\u2600-\u2B55"
+                               u"\u23cf"
+                               u"\u23e9"
+                               u"\u231a"
+                               u"\u3030"
+                               u"\ufe0f"
+                               u"\u2069"
+                               u"\u2066"
+                               u"\u200c"
+                               u"\u2068"
+                               u"\u2067"
+                               "]+", flags=regex_UNICODE)
+    return unwanted.sub(r'', text)
+
 
 def clean_text(text:str,context:str) -> str:
     print("cleaning text")
+
+    text = remove_unwanted_chars(text)
+    #text = get_display(arabic_reshaper.reshape(text))
+
     word_list = text.split(" ")
     general_cleaned = [clean_word(word) for word in word_list]
 
-    custom_clean = general_cleaned
+    custom_cleaned = general_cleaned
 
     if context == "twitter":
         custom_cleaned = [clean_twitter_word(word) for word in general_cleaned]
@@ -110,6 +148,7 @@ def clean_text(text:str,context:str) -> str:
         custom_cleaned = [clean_telegram_word(word) for word in general_cleaned]
 
     return " ".join(custom_cleaned)
+
 
 def clean_word(word: str) -> str:
     """
@@ -126,6 +165,8 @@ def clean_word(word: str) -> str:
     return word
 
 
+
+
 def clean_twitter_word(word : str) -> str:
     if "t.co" in word : return ""
 
@@ -137,9 +178,14 @@ def clean_telegram_word(word : str) -> str:
 
     return word
 
+def load_normal_text(source : str):
+    print(f"loading normal text from {source}")
+    with open(source,"r") as file:
+        return file.read(), "text"
+
 
 def load_telegram_text(source_dir : str) -> str:
-    print("loading telegram files")
+    print(f"loading telegram files from {source_dir}")
 
     list_of_files = glob_path( source_dir )
 
@@ -159,7 +205,7 @@ def load_telegram_text(source_dir : str) -> str:
     meta_list = soup.find_all("div")
 
     text = []
-    user_id = ''
+    user_id = 'telegram'
     for meta in meta_list:
         if "text bold" in meta.attrs['class']:
             user_id = meta.get_text()

@@ -6,10 +6,8 @@
 from wordcloud_fa import WordCloudFa
 
 
-from config import general_config
-from config import twitter_config
-from config import telegram_config
-from utils import *
+from config import *
+from src.utils import *
 
 def main():
 
@@ -37,10 +35,9 @@ def main():
     OUT_FOLDER = general_config['OUT_FOLDER']
 
     make_dir(OUT_FOLDER)
+    print("saving output image to" + f"{OUT_FOLDER}{user_id}.png")
 
     result_image.save(f"{OUT_FOLDER}{user_id}.png")
-    #with open(f"{OUT_FOLDER}{user_id}.txt","w") as result_file:
-    #    result_file.write(raw_str)
     with open(f"{OUT_FOLDER}cleaned_{user_id}.txt","w") as cleaned_result_file:
         cleaned_result_file.write(text)
 

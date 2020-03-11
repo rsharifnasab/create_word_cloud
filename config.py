@@ -59,6 +59,6 @@ twitter_config = {
     # it can be clipboard
     # or a file path
     #############
-    "SOURCE" : "clipboard" # "./input.txt",
+    "SOURCE" :  "./input.txt", #"clipboard" 
 
 }
