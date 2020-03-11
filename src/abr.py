@@ -70,12 +70,26 @@ def main():
     )
     wc.generate(text)
 
+    #########
+    # generate main image
+    #########
     result_image = wc.to_image()
 
+    ##############
+    # recolor image based on mask
+    # if config[colorful] is true
+    #############
     if general_config["COLORFUL_IMAGE"]:
         image_colors = ImageColorGenerator(mask)
         result_image = wc.recolor(color_func=image_colors).to_image()
 
+    #################
+    # save result image
+    # and cleaned text to out folder
+    ################
+    # name of text file and image file are based on twitter username
+    # in case of telegram or normal text, it it telegram.png or text.png
+    ##################
     OUT_FOLDER = general_config['OUT_FOLDER']
 
     make_dir(OUT_FOLDER)
