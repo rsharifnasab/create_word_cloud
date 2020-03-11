@@ -44,7 +44,7 @@
 + arabic reshaper
 + bidi
 
-You can also  install requirements using `requirements.txt` and `pip`:
+You can also install requirements using `requirements.txt` and `pip`:
 
     pip3 install -r requirements.txt
 
