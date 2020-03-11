@@ -72,6 +72,12 @@ def main():
 
     result_image = wc.to_image()
 
+    if general_config["COLORFUL_IMAGE"]:
+        image_colors = ImageColorGenerator(mask)
+        result_image = wc.recolor(color_func=image_colors).to_image()
+
+    result_image.show()
+
     OUT_FOLDER = general_config['OUT_FOLDER']
 
     make_dir(OUT_FOLDER)

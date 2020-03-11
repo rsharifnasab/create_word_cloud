@@ -7,11 +7,15 @@ general_config = {
     #######################
 	"OUT_FOLDER" : "./out/",
 
-    ################
+    ##################
     # the mask!
-    ###############
-    "MASK" : "./assets/masks/tw",
+    # check normalize when mask is grey scale to chage it to black and white
+    # colorful image is experimental, it is for image that have white background and good colors
+    # in most cases it is not useful!
+    ##################
+    "MASK" : "./assets/masks/stalman",
     "NORMALIZE_MASK" : False,
+    "COLORFUL_IMAGE" : False,
 
     ############
     # color of background text
