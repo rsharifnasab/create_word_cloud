@@ -6,6 +6,7 @@ from numpy import array as np_array
 from os.path import exists
 from bs4 import BeautifulSoup
 from allmytweets import get_text as load_twitter_text
+from glob import glob as glob_path
 
 from config import *
 
@@ -154,14 +155,18 @@ def load_telegram_text(source_dir : str) -> str:
 
     print("parsing")
     soup = BeautifulSoup(loaded_xml, 'html.parser')
+
     meta_list = soup.find_all("div")
 
     text = []
+    user_id = ''
     for meta in meta_list:
-        if "text" in meta.attrs['class']:
-            text.add(meta.get_text() + " ")
+        if "text bold" in meta.attrs['class']:
+            user_id = meta.get_text()
+        elif "text" in meta.attrs['class']:
+            text.append(meta.get_text() + " ")
 
-    return " ".join(text)
+    return " ".join(text), user_id
 
 
 def make_dir(dir : str):
