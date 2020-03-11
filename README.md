@@ -2,7 +2,7 @@
 
 
 ## how to use
-1. open config.py and set your setting
+1. open config.py and set your setting such as input address
 2. run program.py with python3.4 or higher
 3. select your context (twitter or telegram or normal text)
 4. wait until program finishes
@@ -49,3 +49,13 @@
 + write documentation
 + add commandline argument parse
 + add twint support in abr.py
+
+## special thank from:
+
++ [Mohammadreza Alihoseiny](https://github.com/alihoseiny/) for developing wordcloud-fa and writing [this blog post](https://blog.alihoseiny.ir/%DA%86%DA%AF%D9%88%D9%86%D9%87-%D8%A8%D8%A7-%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-%D8%A7%D8%A8%D8%B1-%DA%A9%D9%84%D9%85%D8%A7%D8%AA-%D9%81%D8%A7%D8%B1%D8%B3%DB%8C-%D8%A8%D8%B3%D8%A7%D8%B2%DB%8C%D9%85%D8%9F/)
+
++ [amueller](https://github.com/amueller) for developing wordcloud package
+
++ [Ali Yoonesi](https://github.com/AYoonesi) for good advices and troubleshoots
+
++ [Radin Shayanfar](https://github.com/radinshayanfar) for pull requests and bug fixes
