@@ -1,7 +1,7 @@
 # create word cloud for telgram chat and twitter
 
 
-## how to use
+## how to use (general)
 1. open config.py and set your setting such as input address
 2. run program.py with python3.4 or higher
 3. select your context (twitter or telegram or normal text)
@@ -9,7 +9,7 @@
 
 
 
-## how to use tweets
+## how to use (tweets)
 1. you should get tweets from [this site](https://www.allmytweets.net/) and paste to a file for example input.txt
 2. enter file address to config.py, twitter_config dictionary
 3. if you set 'SOURCE' : "clipboard" program will use system clipboard instead of input file
@@ -18,7 +18,7 @@
  + no link will remove all tweets contains link for example quotes, images and unfollow checker auto tweets
 
 
-## how to use telegram
+## how to use (telegram)
 1. export chat history to a folder
 2. enter folder adress in config.py in telegram_config dictionary, something like './input/*.html'
 
