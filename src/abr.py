@@ -3,21 +3,22 @@
 ##############################
 #          IMPORTS
 ##############################
-from wordcloud_fa import WordCloudFa
+
 ############################
 # the library for creating wordcloud
 ###########################
+from wordcloud import WordCloud
+from wordcloud import ImageColorGenerator
 
-
-from config import *
 ##################################
 # load 3 config dictionaries in config.py
 ################################
+from config import *
 
-from src.utils import *
 ################
 # load util functions in src/utils.py for loading and cleaning and etc
 ################
+from src.utils import *
 
 
 def main():
@@ -47,19 +48,29 @@ def main():
     print_stats(text)
     #print some stats to know the program is working well
 
-    wc_instance = WordCloudFa(
-        background_color=general_config["BG_COLOR"],
-        font_path=general_config["FONT"],
-        mask = mask,
-        persian_normalize=True,
+
+    wc = WordCloud(
+        mask=mask,
+        background_color= general_config["BG_COLOR"],
+        font_path = general_config["FONT"],
+
+
         include_numbers=False,
         stopwords=stop_words,
+
+        max_words=general_config["MAX_WORDS"],
+
+        contour_width=general_config["LINE_WIDTH"],
+        contour_color=general_config["LINE_COLOR"],
+
+        max_font_size=general_config["MAX_FONT"],
+        min_font_size=general_config["MIN_FONT"],
+
+        relative_scaling=0.2,
     )
+    wc.generate(text)
 
-    word_cloud = wc_instance.generate(text)
-    # genrate the word cloud!
-
-    result_image = word_cloud.to_image()
+    result_image = wc.to_image()
 
     OUT_FOLDER = general_config['OUT_FOLDER']
 
@@ -71,6 +82,7 @@ def main():
         cleaned_result_file.write(text)
 
     result_image.show()
+
 
 #####################################################
 
