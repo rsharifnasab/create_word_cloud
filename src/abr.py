@@ -76,8 +76,6 @@ def main():
         image_colors = ImageColorGenerator(mask)
         result_image = wc.recolor(color_func=image_colors).to_image()
 
-    result_image.show()
-
     OUT_FOLDER = general_config['OUT_FOLDER']
 
     make_dir(OUT_FOLDER)
