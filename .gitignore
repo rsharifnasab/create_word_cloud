@@ -9,3 +9,5 @@ twitter/out
 twitter/old
 twitter/t.txt
 result.png
+env/
+venv/
