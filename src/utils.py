@@ -13,17 +13,20 @@ from arabic_reshaper import arabic_reshaper
 from bidi.algorithm import get_display
 
 from src.allmytweets import get_text as load_twitter_text
+from src.twitter_data import get_text as load_tw_data
+
 from config import *
 
 
 
 def determine_context() -> str:
     print("which word cloud you want to create?")
-    print("1)twitter  2)telegram 3)normal_text")
+    print("1)twitter  2)telegram 3)normal_text 4)data")
     context = input().strip()
     if context in ["", "1", "tw", "twitter"]: return "twitter"
     elif context in ["2", "tg", "telegram"]: return "telegram"
     elif context in ["3", "text", "normal"]: return "text"
+    elif context in ["4", "data"]: return "data"
     else:
         print("invalid input, exiting..")
         exit()
@@ -35,6 +38,8 @@ def get_text(context : str):
         return load_telegram_text(telegram_config['SOURCE'])
     elif context == "text":
         return load_normal_text(text_config['SOURCE'])
+    elif context == "data":
+        return load_tw_data(data_config['SOURCE'])
 
     raise ValueError("shoudnt reach here!")
 
@@ -147,7 +152,7 @@ def clean_text(text:str,context:str, stop_words) -> str:
 
     custom_cleaned = general_cleaned
 
-    if context == "twitter":
+    if context == "twitter" or context == "data":
         custom_cleaned = [clean_twitter_word(word) for word in general_cleaned]
 
     elif context == "telegram":
@@ -178,6 +183,8 @@ def clean_word(word: str) -> str:
 
 def clean_twitter_word(word : str) -> str:
     if "t.co" in word : return ""
+    if "@" in word : return ""
+    if "RT" in word : return ""
 
     return word
 

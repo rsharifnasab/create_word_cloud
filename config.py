@@ -108,3 +108,35 @@ twitter_config = {
     "SOURCE" : "clipboard" #"./input.txt", #
 
 }
+
+
+################
+# setting of loading exported twitter data
+# this mode is experimental
+# you should download your twitter data first 
+# before use this part
+################
+data_config = {
+    ###############
+    #if you have unfollow cheker
+    # or some thing that post automatically tweet with link
+    # turn on this option to remove all tweets with links (and links and quets)
+    ###########
+    "NO_LINK" : False,
+
+    ###############
+    # to create cloud based on tweets
+    # and not replies
+    # set this boolean to True
+    # use with cautopn
+    ####################
+    "NO_REPLIES" : False,
+
+    ##############
+    # where should the program look for tweet.js
+    # dont open or edit this file
+    # the program will do it all
+    #############
+    "SOURCE" : "input/data/tweet.js"
+
+}

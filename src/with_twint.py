@@ -3,7 +3,7 @@
 import twint
 from json import loads as jsread
 
-from wordcloud_fa import WordCloudFa
+#from wordcloud_fa import WordCloudFa
 import numpy as np
 from PIL import Image
 
