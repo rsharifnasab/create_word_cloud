@@ -1,11 +1,16 @@
 # create word cloud for telgram chat and twitter
 
-
 ## how to use (general)
-1. open config.py and set your setting such as input address
-2. run program.py with python3.4 or higher
-3. select your context (twitter or telegram or normal text)
-4. wait until program finishes
+
+1. read this file carefully
+
+2. open config.py and set your setting such as input address
+
+3. run program.py with python3.4 or higher
+
+4. select your context (twitter or telegram or normal text or twitter exported data)
+
+5. wait until program finishes
 
 
 
@@ -21,6 +26,21 @@
 ## how to use (telegram)
 1. export chat history to a folder
 2. enter folder adress in config.py in telegram_config dictionary, something like './input/*.html'
+
+
+
+## how to use (twitter data)
+
+1. this option is for people who wants a cloud for all tweets not last 3000 tweets
+2. first of all you should follow this [link](https://help.twitter.com/en/managing-your-account/how-to-download-your-twitter-archive) to export twitter data, it takes some time! be patient
+3. after your data is ready, download and unzip it, we need the `tweet.js` file in next step
+4. enter path of `tweet.js` in data folder to the config file (in `config.py/data_config`) 
+5. open program and select option `4`
+6. you can set NO_REPLIES if you want only your tweets not replies
+7. there is no NO_RETWEET option because retweets are not included in exported data 
+8. press enter and enjoy :D 
+
+ + no link will remove all tweets contains link for example quotes, images and unfollow checker auto tweets
 
 
 
@@ -40,15 +60,15 @@
   
     
   
-+ if stop words didnt removed automatically, set STOP_WORD_CLEAN to "manual" in config.py
++ if stop words didn't removed automatically, set STOP_WORD_CLEAN to "manual" in config.py
 
   
 
-+ only if persian words are reversed, make ARABIC_RESHAPER to True
++ only if Persian words are reversed, make ARABIC_RESHAPER to True
 
   
 
-+ line color and line width are for s aplitter line between text and whitespace, it maybe good for some cases
++ line color and line width are for splitter line between text and whitespace, it maybe good for some cases
 
   
 
@@ -71,10 +91,13 @@ You can also install requirements using `requirements.txt` and `pip`:
 
     pip3 install -r requirements.txt
 
-## todo
-+ write better documentation
-+ add commandline argument parse
-+ add well twint support for getting tweets
+
+
+## to-do
+
++ [ ] write better documentation
++ [ ] add command-line argument parse
++ [ ] add well twint support for getting tweets automatically
 
 ## special thank from:
 
