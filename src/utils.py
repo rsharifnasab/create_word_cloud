@@ -68,17 +68,17 @@ def load_mask() -> np_array:
         exit()
 
     mask_array = np_array(jpg_image)
-
+    NORMALIZE_MASK_NUMBER = general_config["NORMALIZE_MASK_NUMBER"]
     if general_config["NORMALIZE_MASK"]:
         print("normalizing mask")
         for i in range(len(mask_array)):
             for j in range(len(mask_array[i])):
                 old_arr = mask_array[i][j]
 
-                if sum(old_arr)>100:
+                if sum(old_arr)> NORMALIZE_MASK_NUMBER:
                     new_arr = [255,255,255]
                 else:
-                    new_arr = [0,0,0]
+                    new_arr = old_arr 
 
                 mask_array[i][j] = new_arr
 

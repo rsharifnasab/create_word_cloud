@@ -15,6 +15,7 @@ general_config = {
     ##################
     "MASK" : "./assets/masks/tw",
     "NORMALIZE_MASK" : False,
+	"NORMALIZE_MASK_NUMBER" : 200,
     "COLORFUL_IMAGE" : False,
 
     ############
@@ -113,7 +114,7 @@ twitter_config = {
 ################
 # setting of loading exported twitter data
 # this mode is experimental
-# you should download your twitter data first 
+# you should download your twitter data first
 # before use this part
 ################
 data_config = {
