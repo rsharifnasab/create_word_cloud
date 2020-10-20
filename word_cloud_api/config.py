@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 
+pre_path = "/home/rsharifnasab/word_cloud/"
+
 general_config = {
 
     ########################
     # output folder to save generated cloud
     #######################
-	"OUT_FOLDER" : "./out/",
+	"OUT_FOLDER" : pre_path + "out/",
 
     ##################
     # the mask!
@@ -13,7 +15,7 @@ general_config = {
     # colorful image is experimental, it is for image that have white background and good colors
     # in most cases it is not useful!
     ##################
-    "MASK" : "./assets/masks/tw",
+    "MASK" : pre_path + "assets/masks/circle",
     "NORMALIZE_MASK" : False,
 	"NORMALIZE_MASK_NUMBER" : 200,
     "COLORFUL_IMAGE" : False,
@@ -28,7 +30,7 @@ general_config = {
     # minimum font size os the size of smallest element in shape
     # maximum font size is max font size for most frequent shape in text
     #############
-    "FONT" : "./assets/fonts/shabnam/Shabnam.ttf",
+    "FONT" : pre_path + "assets/fonts/shabnam/Shabnam.ttf",
 	"MIN_FONT" : 5,
 	"MAX_FONT" : 1000,
 
@@ -51,9 +53,9 @@ general_config = {
     # list of file that contains stop words
     #################
     "STOP_WORDS_LIST" : [
-        "./assets/stop_words/stopwords_me.txt",
-        "./assets/stop_words/origianl_stop_words.txt",
-        "./assets/stop_words/addtional_stops.txt",
+        pre_path + "assets/stop_words/stopwords_me.txt",
+        pre_path + "assets/stop_words/origianl_stop_words.txt",
+        pre_path + "assets/stop_words/addtional_stops.txt",
         ],
 
     #############
@@ -66,7 +68,7 @@ general_config = {
     #######################
     # change this boolean only if you have problem whit persian texts
     ######################
-    "ARABIC_RESHAPER" : False,
+    "ARABIC_RESHAPER" : not False,
 }
 
 telegram_config = {

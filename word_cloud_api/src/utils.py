@@ -65,7 +65,7 @@ def load_mask() -> np_array:
         jpg_image = png_image.convert('RGB')
     else:
         print("mask not found")
-        exit()
+        raise NameError('mask not found')
 
     mask_array = np_array(jpg_image)
     NORMALIZE_MASK_NUMBER = general_config["NORMALIZE_MASK_NUMBER"]
@@ -78,7 +78,7 @@ def load_mask() -> np_array:
                 if sum(old_arr)> NORMALIZE_MASK_NUMBER:
                     new_arr = [255,255,255]
                 else:
-                    new_arr = old_arr 
+                    new_arr = old_arr
 
                 mask_array[i][j] = new_arr
 

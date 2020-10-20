@@ -21,13 +21,13 @@ from config import *
 from src.utils import *
 
 
-def main():
+def main(inp_text = None):
     """
         main function of the program
         this will do whole thigs you expect from program :D
     """
 
-    context = determine_context()
+    context = "text" # determine_context()
     # find out where is the  context, is it twitter or telegram or normal text
     # this is the only function that interacts with user directly
 
@@ -39,7 +39,7 @@ def main():
     stop_words = load_stop_words()
     # load stop words from stop words list
 
-    text, user_id = get_text(context)
+    text, user_id =  inp_text, "text" #get_text(context)
     # load text adn find twiter username (to know the address of save file)
 
     text = clean_text(text = text , context = context, stop_words = stop_words)
@@ -99,7 +99,7 @@ def main():
     with open(f"{OUT_FOLDER}cleaned_{user_id}.txt","w") as cleaned_result_file:
         cleaned_result_file.write(text)
 
-    result_image.show()
+#    result_image.show()
 
 
 #####################################################
