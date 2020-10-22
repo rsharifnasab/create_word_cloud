@@ -99,7 +99,7 @@ You can also install requirements using `requirements.txt` and `pip`:
 + [ ] add command-line argument parse
 + [ ] add well twint support for getting tweets automatically
 
-## special thank from:
+## special thanks to:
 
 + [Mohammadreza Alihoseiny](https://github.com/alihoseiny/) for developing wordcloud-fa and writing [this blog post](https://blog.alihoseiny.ir/%DA%86%DA%AF%D9%88%D9%86%D9%87-%D8%A8%D8%A7-%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-%D8%A7%D8%A8%D8%B1-%DA%A9%D9%84%D9%85%D8%A7%D8%AA-%D9%81%D8%A7%D8%B1%D8%B3%DB%8C-%D8%A8%D8%B3%D8%A7%D8%B2%DB%8C%D9%85%D8%9F/)
 
