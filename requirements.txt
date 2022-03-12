@@ -2,6 +2,6 @@ Pillow == 9.0.1
 arabic-reshaper == 2.0.15
 beautifulsoup4 == 4.8.2
 clipboard == 0.0.4
-numpy == 1.18.1
+numpy == 1.21.0
 python-bidi == 0.4.2
 wordcloud==1.6.0
