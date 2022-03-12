@@ -19,9 +19,11 @@ def get_text(source : str) -> (str,str):
     
     print("cleaning")
     all_text = []
+    bad_char = "&gt;" 
     for whole_json in data:
         tweet = whole_json["tweet"]
         text = clean_tweet(tweet)
+        text = text.replace(bad_char, "")  #hame &gt; ha ro hazf kon
         if text!= "" : all_text.append(text)
     print(f"cleaning complete remained {len(all_text)}")
 
