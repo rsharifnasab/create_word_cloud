@@ -1,4 +1,4 @@
-Pillow == 10.0.1
+Pillow == 10.2.0
 arabic-reshaper == 2.0.15
 beautifulsoup4 == 4.8.2
 clipboard == 0.0.4
